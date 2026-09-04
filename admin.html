@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin • Koleksi Dr. Pinguin</title>
+  <meta name="robots" content="noindex, nofollow">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-zinc-950 text-zinc-200 min-h-screen">
+  <div id="login" class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
+      <h1 class="text-2xl font-bold text-center mb-1">Admin Panel</h1>
+      <p class="text-zinc-400 text-sm text-center mb-6">Koleksi Dr. Pinguin</p>
+      <label class="block text-sm text-zinc-400 mb-1.5">Password</label>
+      <input id="pw" type="password" class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-3 outline-none focus:border-orange-500 mb-4">
+      <button id="loginBtn" class="w-full bg-orange-500 hover:bg-orange-400 text-black font-bold py-3 rounded-xl">Masuk</button>
+      <p id="loginErr" class="hidden text-rose-400 text-sm mt-3 text-center">Password salah</p>
+      <a href="/" class="block text-center text-xs text-zinc-500 mt-4">← Kembali ke gallery</a>
+    </div>
+  </div>
+
+  <div id="app" class="hidden max-w-5xl mx-auto px-4 py-8">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h1 class="text-xl font-black">Admin</h1>
+        <p class="text-sm text-zinc-400"><span id="count">0</span> video di memori</p>
+      </div>
+      <div class="flex gap-2">
+        <a href="/" class="px-3 py-2 rounded-xl bg-zinc-800 text-sm">Gallery</a>
+        <button id="logout" class="px-3 py-2 rounded-xl bg-zinc-800 text-sm">Logout</button>
+      </div>
+    </div>
+
+    <div class="mb-6 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-sm text-zinc-300">
+      Perubahan ada di browser dulu. Supaya tampil di site: Export JSON lalu commit <code class="text-orange-300">videos.json</code>, atau pakai Simpan ke GitHub.
+      Maksimal import <strong>50 URL</strong> per kali.
+    </div>
+
+    <section class="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 mb-6">
+      <h2 class="font-bold mb-3">Tambah 1 video</h2>
+      <div class="grid sm:grid-cols-2 gap-3">
+        <input id="title" placeholder="Judul *" class="bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 outline-none focus:border-orange-500">
+        <input id="embed" placeholder="https://tv1.indoav.app/e/xxxx *" class="bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 outline-none focus:border-orange-500">
+        <input id="category" placeholder="Kategori (Jilbab, ABG, STW...)" list="cats" class="bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 outline-none focus:border-orange-500">
+        <input id="thumb" placeholder="Thumbnail URL (opsional)" class="bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 outline-none focus:border-orange-500">
+      </div>
+      <datalist id="cats">
+        <option value="Umum"><option value="Jilbab"><option value="ABG"><option value="STW"><option value="Viral"><option value="MILF">
+      </datalist>
+      <button id="addBtn" class="mt-3 px-5 py-2.5 rounded-xl bg-orange-500 text-black font-bold">Tambah</button>
+    </section>
+
+    <section class="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 mb-6">
+      <h2 class="font-bold mb-2">Bulk import (satu URL per baris, max 50)</h2>
+      <textarea id="bulk" rows="8" class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 font-mono text-sm outline-none focus:border-orange-500" placeholder="https://tv1.indoav.app/e/xxxx"></textarea>
+      <div class="grid sm:grid-cols-2 gap-3 mt-3">
+        <input id="bulkPrefix" value="Video" class="bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm">
+        <input id="bulkCat" value="Umum" class="bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm">
+      </div>
+      <button id="bulkBtn" class="mt-3 px-5 py-2.5 rounded-xl bg-orange-500 text-black font-bold">Import</button>
+      <p id="bulkMsg" class="text-sm mt-2 text-zinc-400"></p>
+    </section>
+
+    <section class="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 mb-6">
+      <h2 class="font-bold mb-3">Simpan / backup</h2>
+      <div class="flex flex-wrap gap-2 mb-4">
+        <button id="exportBtn" class="px-4 py-2 rounded-xl bg-zinc-800">Download videos.json</button>
+        <label class="px-4 py-2 rounded-xl bg-zinc-800 cursor-pointer">Import file
+          <input id="importFile" type="file" accept="application/json" class="hidden">
+        </label>
+        <button id="resetBtn" class="px-4 py-2 rounded-xl border border-rose-500/40 text-rose-400">Reset ke videos.json server</button>
+      </div>
+      <div class="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30">
+        <h3 class="font-semibold text-emerald-400 mb-2"><i class="fab fa-github mr-1"></i> Simpan ke GitHub</h3>
+        <input id="ghToken" type="password" placeholder="GitHub PAT (ghp_...)" class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm mb-2">
+        <div class="grid sm:grid-cols-3 gap-2 mb-2">
+          <input id="ghOwner" value="fashfdhgacd" class="bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm">
+          <input id="ghRepo" value="koleksidrpinguin-cf" class="bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm">
+          <input id="ghPath" value="videos.json" class="bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2 text-sm">
+        </div>
+        <button id="ghPush" class="px-4 py-2 rounded-xl bg-emerald-600 text-white font-medium">Push videos.json</button>
+        <p id="ghStatus" class="text-sm mt-2"></p>
+      </div>
+    </section>
+
+    <section>
+      <input id="listSearch" placeholder="Filter daftar..." class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 mb-3 text-sm">
+      <div id="list" class="space-y-2"></div>
+    </section>
+  </div>
+
+<script>
+const PASS = "Koleksi Dr. Pinguin Bokep, M.S.B";
+const LS_KEY = "kdp_videos_cf";
+const LS_AUTH = "kdp_admin_ok";
+let videos = [];
+
+function nextId() {
+  return videos.reduce((m, v) => Math.max(m, Number(v.id) || 0), 0) + 1;
+}
+
+async function loadServer() {
+  const res = await fetch("/videos.json?t=" + Date.now(), { cache: "no-store" });
+  const data = await res.json();
+  return Array.isArray(data) ? data : [];
+}
+
+function saveLocal() {
+  localStorage.setItem(LS_KEY, JSON.stringify(videos));
+  renderList();
+}
+
+async function bootData() {
+  const local = localStorage.getItem(LS_KEY);
+  if (local) {
+    try { videos = JSON.parse(local) || []; } catch { videos = []; }
+  } else {
+    videos = await loadServer();
+    saveLocal();
+  }
+  renderList();
+}
+
+function renderList() {
+  document.getElementById("count").textContent = videos.length;
+  const q = (document.getElementById("listSearch").value || "").toLowerCase();
+  const rows = videos.filter(v => !q || String(v.title||"").toLowerCase().includes(q) || String(v.embed||"").toLowerCase().includes(q));
+  document.getElementById("list").innerHTML = rows.slice().reverse().slice(0, 200).map(v => `
+    <div class="flex items-center gap-3 bg-zinc-900 border border-zinc-800 rounded-xl p-3">
+      <div class="min-w-0 flex-1">
+        <div class="font-medium truncate">${esc(v.title)}</div>
+        <div class="text-[11px] text-zinc-500 truncate">${esc(v.category||"")} · ${esc(v.embed||"")}</div>
+      </div>
+      <button data-del="${v.id}" class="text-rose-400 text-sm px-2">Hapus</button>
+    </div>
+  `).join("") + (rows.length > 200 ? `<p class="text-xs text-zinc-500">Menampilkan 200 terbaru dari ${rows.length}</p>` : "");
+  document.querySelectorAll("[data-del]").forEach(btn => {
+    btn.onclick = () => {
+      if (!confirm("Hapus video ini dari memori browser?")) return;
+      videos = videos.filter(v => String(v.id) !== String(btn.dataset.del));
+      saveLocal();
+    };
+  });
+}
+
+function esc(s) {
+  return String(s||"").replace(/[&<>"']/g, c => ({"&":"&","<":"<",">":">","\"":""","'":"&#39;"}[c]));
+}
+
+document.getElementById("loginBtn").onclick = () => {
+  if (document.getElementById("pw").value === PASS) {
+    sessionStorage.setItem(LS_AUTH, "1");
+    document.getElementById("login").classList.add("hidden");
+    document.getElementById("app").classList.remove("hidden");
+    bootData();
+  } else {
+    document.getElementById("loginErr").classList.remove("hidden");
+  }
+};
+document.getElementById("pw").addEventListener("keydown", e => { if (e.key === "Enter") document.getElementById("loginBtn").click(); });
+document.getElementById("logout").onclick = () => { sessionStorage.removeItem(LS_AUTH); location.reload(); };
+
+if (sessionStorage.getItem(LS_AUTH) === "1") {
+  document.getElementById("login").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+  bootData();
+}
+
+document.getElementById("addBtn").onclick = () => {
+  const title = document.getElementById("title").value.trim();
+  const embed = document.getElementById("embed").value.trim();
+  if (!title || !embed) return alert("Judul dan embed wajib");
+  videos.push({
+    id: nextId(),
+    title,
+    embed,
+    category: document.getElementById("category").value.trim() || "Umum",
+    thumb: document.getElementById("thumb").value.trim()
+  });
+  saveLocal();
+  document.getElementById("title").value = "";
+  document.getElementById("embed").value = "";
+  document.getElementById("thumb").value = "";
+};
+
+document.getElementById("bulkBtn").onclick = () => {
+  const lines = document.getElementById("bulk").value.split(/\n/).map(s => s.trim()).filter(Boolean);
+  if (!lines.length) return;
+  if (lines.length > 50) {
+    document.getElementById("bulkMsg").textContent = "Maks 50 URL. Potong dulu.";
+    return;
+  }
+  const prefix = document.getElementById("bulkPrefix").value.trim() || "Video";
+  const cat = document.getElementById("bulkCat").value.trim() || "Umum";
+  let n = 0;
+  lines.forEach(url => {
+    if (!/^https?:\/\//i.test(url)) return;
+    videos.push({ id: nextId(), title: prefix + " " + nextId(), embed: url, category: cat, thumb: "" });
+    n++;
+  });
+  saveLocal();
+  document.getElementById("bulk").value = "";
+  document.getElementById("bulkMsg").textContent = "Berhasil import " + n + " video. Jangan lupa export / push GitHub.";
+};
+
+document.getElementById("exportBtn").onclick = () => {
+  const blob = new Blob([JSON.stringify(videos, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "videos.json";
+  a.click();
+};
+
+document.getElementById("importFile").onchange = async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  try {
+    const data = JSON.parse(await file.text());
+    if (!Array.isArray(data)) throw new Error("bukan array");
+    videos = data;
+    saveLocal();
+    alert("Import " + videos.length + " video");
+  } catch {
+    alert("File JSON tidak valid");
+  }
+};
+
+document.getElementById("resetBtn").onclick = async () => {
+  if (!confirm("Buang data browser dan reload dari server?")) return;
+  localStorage.removeItem(LS_KEY);
+  videos = await loadServer();
+  saveLocal();
+};
+
+document.getElementById("listSearch").addEventListener("input", renderList);
+
+document.getElementById("ghPush").onclick = async () => {
+  const token = document.getElementById("ghToken").value.trim();
+  const owner = document.getElementById("ghOwner").value.trim();
+  const repo = document.getElementById("ghRepo").value.trim();
+  const path = document.getElementById("ghPath").value.trim() || "videos.json";
+  const status = document.getElementById("ghStatus");
+  if (!token) { status.textContent = "Isi PAT dulu"; return; }
+  status.textContent = "Mengirim...";
+  try {
+    const metaRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+      headers: { Authorization: "Bearer " + token, Accept: "application/vnd.github+json" }
+    });
+    const meta = metaRes.ok ? await metaRes.json() : {};
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(videos, null, 2))));
+    const put = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+      method: "PUT",
+      headers: { Authorization: "Bearer " + token, Accept: "application/vnd.github+json", "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: "update videos.json via admin (" + videos.length + " items)",
+        content,
+        sha: meta.sha,
+        branch: "main"
+      })
+    });
+    if (!put.ok) throw new Error(await put.text());
+    status.innerHTML = '<span class="text-emerald-400">Tersimpan. Tunggu 1–2 menit Cloudflare deploy.</span>';
+  } catch (err) {
+    status.innerHTML = '<span class="text-rose-400">Gagal: ' + esc(String(err.message||err).slice(0,180)) + "</span>";
+  }
+};
+</script>
+</body>
+</html>
