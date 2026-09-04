@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Dr. Pinguin Bokep, M.S.B. — Koleksi Video Indo Viral</title>
+  <meta name="description" content="Koleksi Dr. Pinguin — video indo viral embed. 18+.">
+  <meta name="rating" content="adult">
+  <meta name="robots" content="index, follow">
+  <meta name="referrer" content="origin">
+  <meta property="og:title" content="Dr. Pinguin Bokep, M.S.B.">
+  <meta property="og:description" content="Koleksi video indo viral terbaru. 18+.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://koleksidrpinguin.site/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23ff9000'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-size='36' font-family='Arial Black' fill='%23000'%3EP%3C/text%3E%3C/svg%3E">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: {
+        ph: { DEFAULT:'#ff9000', soft:'#ffb340', dim:'#cc7300' },
+        ink: { 950:'#050505', 900:'#0d0d0d', 800:'#161616', 700:'#222' }
+      }}}
+    }
+  </script>
+  <style>
+    .card { transition: transform .25s ease, border-color .25s ease; }
+    .card:hover { transform: translateY(-6px); }
+    .line-2 { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    iframe.player { width:100%; height:100%; border:0; }
+  </style>
+</head>
+<body class="bg-ink-950 text-white antialiased">
+
+  <div id="ageGate" class="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black">
+    <div class="w-full max-w-sm text-center border border-ink-700 bg-ink-900 p-6 rounded-2xl">
+      <div class="w-14 h-14 mx-auto rounded-xl bg-ph text-black font-black text-2xl flex items-center justify-center mb-3">P</div>
+      <h1 class="text-2xl font-black tracking-tight mb-1"><span class="text-white">DR.</span><span class="text-ph">PINGUIN</span></h1>
+      <p class="text-neutral-400 text-sm mb-5">Konten 18+. Lanjut hanya jika kamu dewasa.</p>
+      <button id="btnEnter" class="w-full py-3 bg-ph hover:bg-ph-soft text-black font-black uppercase text-sm tracking-wider rounded-xl">Masuk</button>
+      <button id="btnLeave" class="w-full mt-2 py-3 border border-neutral-700 text-neutral-400 font-semibold uppercase text-xs rounded-xl">Keluar</button>
+    </div>
+  </div>
+
+  <nav class="fixed top-0 left-0 right-0 z-50 h-12 bg-black flex items-center border-b-2 border-ph">
+    <div class="w-full max-w-7xl mx-auto px-4 flex items-center gap-3">
+      <a href="/" class="flex items-center gap-2 no-underline">
+        <span class="w-7 h-7 rounded bg-ph text-black font-black text-sm flex items-center justify-center">P</span>
+        <span class="font-black text-base tracking-tight"><span class="text-white">DR.</span><span class="text-ph">PINGUIN</span></span>
+      </a>
+      <div class="ml-auto flex items-center gap-2">
+        <input id="search" type="search" placeholder="Cari judul / kategori..."
+               class="hidden sm:block w-56 md:w-80 bg-ink-800 border border-ink-700 rounded-full px-4 py-1.5 text-sm outline-none focus:border-ph">
+        <button id="searchMobileBtn" class="sm:hidden w-9 h-9 text-neutral-300"><i class="fas fa-search"></i></button>
+      </div>
+    </div>
+  </nav>
+
+  <div id="mobileSearch" class="hidden fixed top-12 left-0 right-0 z-40 bg-black p-3 border-b border-ink-700 sm:hidden">
+    <input id="searchMobile" type="search" placeholder="Cari..."
+           class="w-full bg-ink-800 border border-ink-700 rounded-xl px-4 py-2 text-sm outline-none focus:border-ph">
+  </div>
+
+  <main id="mainContent" class="pt-16 max-w-7xl mx-auto px-4 pb-16 opacity-0">
+    <header class="text-center mb-8">
+      <h1 class="text-3xl sm:text-5xl font-black tracking-tight">Koleksi <span class="text-ph">Dr. Pinguin</span></h1>
+      <p class="text-neutral-400 mt-2">Video indo viral · embed streaming · 18+</p>
+      <p id="videoCount" class="text-xs text-neutral-500 mt-1">0 video</p>
+    </header>
+
+    <div id="categoryPills" class="flex gap-2 overflow-x-auto pb-4 mb-4"></div>
+    <div id="gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"></div>
+    <p id="emptyState" class="hidden text-center text-neutral-500 py-16">Belum ada video. Buka <a class="text-ph underline" href="/admin.html">Admin</a> untuk menambah.</p>
+    <div id="pagination" class="flex flex-wrap justify-center gap-2 mt-8"></div>
+  </main>
+
+  <footer class="border-t-2 border-ph bg-black">
+    <div class="max-w-7xl mx-auto px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <span class="font-black text-sm"><span class="text-white">DR.</span><span class="text-ph">PINGUIN</span></span>
+      <p class="text-[11px] text-neutral-500">18+ only · Embed IndoAV · Cloudflare Pages</p>
+    </div>
+  </footer>
+
+  <div id="modal" class="hidden fixed inset-0 z-[80] bg-black/95 flex flex-col">
+    <div class="flex items-center justify-between gap-3 px-4 py-3 border-b border-white/10">
+      <div class="min-w-0">
+        <h2 id="modalTitle" class="text-sm sm:text-base font-bold truncate"></h2>
+        <p id="modalMeta" class="text-[11px] text-ph uppercase font-bold"></p>
+      </div>
+      <button id="modalClose" class="w-10 h-10 bg-ph text-black font-black rounded-lg">✕</button>
+    </div>
+    <div class="flex-1 flex items-center justify-center p-0 sm:p-6 min-h-0">
+      <div class="w-full max-w-5xl aspect-video bg-black overflow-hidden sm:rounded-xl">
+        <iframe id="modalPlayer" class="player" allowfullscreen allow="autoplay; fullscreen; encrypted-media" referrerpolicy="origin"></iframe>
+      </div>
+    </div>
+  </div>
+
+<script>
+const PER_PAGE = 24;
+let videos = [];
+let filtered = [];
+let page = 1;
+let activeCat = "Semua";
+
+async function loadVideos() {
+  try {
+    const res = await fetch("/videos.json?t=" + Date.now(), { cache: "no-store" });
+    const data = await res.json();
+    videos = Array.isArray(data) ? data : [];
+  } catch (e) {
+    videos = [];
+  }
+  applyFilter();
+}
+
+function normalize(v, i) {
+  return {
+    id: v.id || i + 1,
+    title: v.title || v.name || "Video " + (i + 1),
+    embed: v.embed || v.url || v.src || "",
+    category: v.category || v.cat || "Umum",
+    thumb: v.thumb || v.thumbnail || ""
+  };
+}
+
+function uniqueCats() {
+  const set = new Set(videos.map((v, i) => normalize(v, i).category).filter(Boolean));
+  return ["Semua", ...Array.from(set).sort()];
+}
+
+function applyFilter() {
+  const q = (document.getElementById("search").value || document.getElementById("searchMobile").value || "").toLowerCase().trim();
+  filtered = videos.map(normalize).filter(v => {
+    const catOk = activeCat === "Semua" || v.category === activeCat;
+    const qOk = !q || v.title.toLowerCase().includes(q) || v.category.toLowerCase().includes(q);
+    return catOk && qOk && v.embed;
+  });
+  page = 1;
+  render();
+}
+
+function renderPills() {
+  const el = document.getElementById("categoryPills");
+  el.innerHTML = uniqueCats().map(c => `
+    <button data-cat="${c}" class="pill shrink-0 px-3 py-1.5 rounded-full text-xs font-black uppercase tracking-wide border ${c===activeCat ? 'bg-ph text-black border-ph' : 'bg-ink-800 text-neutral-300 border-ink-700'}">${c}</button>
+  `).join("");
+  el.querySelectorAll(".pill").forEach(btn => {
+    btn.onclick = () => { activeCat = btn.dataset.cat; applyFilter(); };
+  });
+}
+
+function render() {
+  renderPills();
+  document.getElementById("videoCount").textContent = filtered.length + " video";
+  const empty = document.getElementById("emptyState");
+  const grid = document.getElementById("gallery");
+  if (!filtered.length) {
+    grid.innerHTML = "";
+    empty.classList.remove("hidden");
+    document.getElementById("pagination").innerHTML = "";
+    return;
+  }
+  empty.classList.add("hidden");
+  const start = (page - 1) * PER_PAGE;
+  const slice = filtered.slice(start, start + PER_PAGE);
+  grid.innerHTML = slice.map(v => {
+    const thumb = v.thumb
+      ? `<img src="${escapeAttr(v.thumb)}" class="w-full h-full object-cover opacity-90" alt="">`
+      : `<div class="w-full h-full bg-gradient-to-br from-ink-800 to-ink-700"></div>`;
+    return `
+      <article class="card bg-ink-900 rounded-2xl overflow-hidden cursor-pointer border border-ink-700 hover:border-ph/60" data-id="${v.id}">
+        <div class="aspect-video relative bg-ink-950">
+          ${thumb}
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-14 h-14 rounded-full bg-black/40 backdrop-blur flex items-center justify-center border border-white/20">
+              <i class="fas fa-play text-white text-xl ml-1"></i>
+            </div>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="flex justify-between items-start gap-2">
+            <h3 class="font-semibold line-2 flex-1 text-sm">${escapeHtml(v.title)}</h3>
+            <span class="text-[10px] px-2 py-1 rounded-full bg-ink-800 text-neutral-400 whitespace-nowrap">${escapeHtml(v.category)}</span>
+          </div>
+        </div>
+      </article>`;
+  }).join("");
+  grid.querySelectorAll("article").forEach(card => {
+    card.onclick = () => playVideo(Number(card.dataset.id));
+  });
+  renderPager();
+}
+
+function renderPager() {
+  const pages = Math.ceil(filtered.length / PER_PAGE);
+  const el = document.getElementById("pagination");
+  if (pages <= 1) { el.innerHTML = ""; return; }
+  let html = "";
+  for (let i = 1; i <= pages; i++) {
+    if (pages > 9 && Math.abs(i - page) > 2 && i !== 1 && i !== pages) {
+      if (i === 2 || i === pages - 1) html += `<span class="px-2 text-neutral-600">…</span>`;
+      continue;
+    }
+    html += `<button data-p="${i}" class="min-w-9 h-9 px-2 rounded-lg text-sm font-bold ${i===page ? 'bg-ph text-black' : 'bg-ink-800 text-neutral-300'}">${i}</button>`;
+  }
+  el.innerHTML = html;
+  el.querySelectorAll("button").forEach(b => b.onclick = () => { page = Number(b.dataset.p); render(); window.scrollTo({top:0,behavior:"smooth"}); });
+}
+
+function playVideo(id) {
+  const video = filtered.find(v => v.id === id) || videos.map(normalize).find(v => v.id === id);
+  if (!video) return;
+  document.getElementById("modalTitle").textContent = video.title;
+  document.getElementById("modalMeta").textContent = video.category;
+  document.getElementById("modalPlayer").src = video.embed;
+  document.getElementById("modal").classList.remove("hidden");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal() {
+  document.getElementById("modal").classList.add("hidden");
+  document.getElementById("modalPlayer").src = "";
+  document.body.style.overflow = "";
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({"&":"&","<":"<",">":">","\"":""","'":"&#39;"}[c]));
+}
+function escapeAttr(s) { return escapeHtml(s); }
+
+document.getElementById("modalClose").onclick = closeModal;
+document.getElementById("modal").addEventListener("click", e => { if (e.target.id === "modal") closeModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+["search","searchMobile"].forEach(id => {
+  document.getElementById(id).addEventListener("input", applyFilter);
+});
+document.getElementById("searchMobileBtn").onclick = () => {
+  document.getElementById("mobileSearch").classList.toggle("hidden");
+};
+
+document.getElementById("btnEnter").onclick = () => {
+  sessionStorage.setItem("age_ok", "1");
+  document.getElementById("ageGate").classList.add("hidden");
+  document.getElementById("mainContent").classList.remove("opacity-0");
+};
+document.getElementById("btnLeave").onclick = () => { window.location.href = "https://google.com"; };
+if (sessionStorage.getItem("age_ok") === "1") {
+  document.getElementById("ageGate").classList.add("hidden");
+  document.getElementById("mainContent").classList.remove("opacity-0");
+}
+
+loadVideos();
+</script>
+</body>
+</html>
